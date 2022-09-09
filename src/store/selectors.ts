@@ -16,7 +16,7 @@ export const getUsersFromStore = (optionValue:string, query:string) => {
 };
 
 export const getUserPostsFromStore = (state:State) => state.userPosts;
-export const getSelectedUser = (state:State) => state.selectUser;
+export const getSelectedUserID = (state:State) => state.selectUserID;
 export const getSortValue = (state:State) => state.sortValue;
 export const getSearchValue = (state:State) => state.searchValue;
 export const getStart = (state:State) => state.start;

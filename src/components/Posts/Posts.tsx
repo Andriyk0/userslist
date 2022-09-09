@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Posts.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectedUser, getUserPostsFromStore } from '../../store/selectors';
+import { getSelectedUserID, getUserPostsFromStore } from '../../store/selectors';
 import { getUserPosts } from '../../api/api';
 import { setUserPosts } from '../../store';
 
 export const Posts: React.FC = () => {
   const dispatch = useDispatch();
-  const user = useSelector(getSelectedUser);
+  const selectUserID = useSelector(getSelectedUserID);
   const posts = useSelector(getUserPostsFromStore);
   const [selectPostId, setSelectPostId] = useState<number>(0);
 
@@ -23,10 +23,10 @@ export const Posts: React.FC = () => {
       }
     };
 
-    if (user) {
-      loadUserPostsFromServer(user.id);
+    if (selectUserID) {
+      loadUserPostsFromServer(selectUserID);
     }
-  }, [user]);
+  }, [selectUserID]);
 
   const showPost = (post:Post) => {
     if (selectPostId !== post.id) {

@@ -30,7 +30,7 @@ interface Post {
 interface State {
   users: User[],
   userPosts: Post[],
-  selectUser: User | undefined,
+  selectUserID: number,
   sortValue: string,
   searchValue: string,
   start: number,

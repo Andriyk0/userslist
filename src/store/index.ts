@@ -4,7 +4,7 @@ import { createAction, createReducer, configureStore } from '@reduxjs/toolkit';
 enum ActionType {
   SET_USERS = 'SET_USERS',
   SET_USER_POSTS = 'SET_USER_POSTS',
-  SET_SELECT_USER = 'SET_SELECT_USER',
+  SET_SELECT_USER_ID = 'SET_SELECT_USER_ID',
   SET_SORT_VALUE = 'SET_SORT_VALUE',
   SET_SEARCH_VALUE = 'SET_SEARCH_VALUE',
   SET_START = 'SET_START',
@@ -13,7 +13,7 @@ enum ActionType {
 const initialState:State = {
   users: [],
   userPosts: [],
-  selectUser: undefined,
+  selectUserID: 0,
   sortValue: 'All',
   searchValue: '',
   start: 0,
@@ -21,7 +21,7 @@ const initialState:State = {
 
 export const setUsers = createAction<User[]>(ActionType.SET_USERS);
 export const setUserPosts = createAction<Post[]>(ActionType.SET_USER_POSTS);
-export const setSelectUser = createAction<User>(ActionType.SET_SELECT_USER);
+export const setSelectUserID = createAction<number>(ActionType.SET_SELECT_USER_ID);
 export const setSortValue = createAction<string>(ActionType.SET_SORT_VALUE);
 export const setSearchValue = createAction<string>(ActionType.SET_SEARCH_VALUE);
 export const setStart = createAction<number>(ActionType.SET_START);
@@ -37,9 +37,9 @@ const reducer = createReducer(initialState, (builder) => {
     state.userPosts = action.payload;
   });
 
-  builder.addCase(setSelectUser, (state, action) => {
+  builder.addCase(setSelectUserID, (state, action) => {
     // eslint-disable-next-line no-param-reassign
-    state.selectUser = action.payload;
+    state.selectUserID = action.payload;
   });
 
   builder.addCase(setSortValue, (state, action) => {

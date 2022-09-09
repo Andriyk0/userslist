@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import classnames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../api/api';
-import { setSelectUser, setUsers } from '../../store';
+import { setSelectUserID, setUsers } from '../../store';
 import {
-  getSearchValue, getSelectedUser, getSortValue, getStart, getUsersFromStore,
+  getSearchValue, getSelectedUserID, getSortValue, getStart, getUsersFromStore,
 } from '../../store/selectors';
 import './Users.scss';
 import { Loader } from '../Loader';
@@ -14,7 +14,7 @@ export const Users:React.FC = () => {
   const sortValue = useSelector(getSortValue);
   const searchValue = useSelector(getSearchValue);
   const users = useSelector(getUsersFromStore(sortValue, searchValue));
-  const selectUser = useSelector(getSelectedUser);
+  const selectUserID = useSelector(getSelectedUserID);
   const start = useSelector(getStart);
 
   const loadUsersFromServer = async () => {
@@ -33,20 +33,25 @@ export const Users:React.FC = () => {
   }, [searchValue, sortValue]);
 
   return (
-    <div className={classnames('user', { user1: selectUser })}>
+    <div className={classnames('user', { user1: selectUserID })}>
       {
         [...users].splice(start, 4).map((user:User) => (
-          <div key={user.id} className={classnames('user__card', { user__card1: selectUser })}>
-            <p className={classnames('user__info', { user__info1: selectUser })}>{user.name}</p>
-            <p className={classnames('user__info', { user__info1: selectUser })}>{user.email}</p>
-            <p className={classnames('user__info', { user__info1: selectUser })}>{user.phone}</p>
-            <p className={classnames('user__info', { user__info1: selectUser })}>{user.website}</p>
+          <div key={user.id} className={classnames('user__card', { user__card1: selectUserID })}>
+            <p className={classnames('user__info', { user__info1: selectUserID })}>{user.name}</p>
+            <p className={classnames('user__info', { user__info1: selectUserID })}>{user.email}</p>
+            <p className={classnames('user__info', { user__info1: selectUserID })}>{user.phone}</p>
+            <p className={classnames('user__info', { user__info1: selectUserID })}>{user.website}</p>
             <button
               type="button"
-              className={classnames('user__button', { user__button1: selectUser })}
-              onClick={() => dispatch(setSelectUser(user))}
+              className={classnames('user__button', { user__button1: selectUserID })}
+              onClick={() => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                selectUserID === user.id
+                  ? dispatch(setSelectUserID(0))
+                  : dispatch(setSelectUserID(user.id));
+              }}
             >
-              Show user posts
+              {selectUserID === user.id ? 'Close user posts' : 'Show user posts'}
             </button>
           </div>
         ))
