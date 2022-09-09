@@ -7,6 +7,7 @@ import {
   getSearchValue, getSelectedUser, getSortValue, getStart, getUsersFromStore,
 } from '../../store/selectors';
 import './Users.scss';
+import { Loader } from '../Loader';
 
 export const Users:React.FC = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,11 @@ export const Users:React.FC = () => {
             </button>
           </div>
         ))
+      }
+      {
+        users.length === 0 && (
+          <Loader />
+        )
       }
     </div>
   );
