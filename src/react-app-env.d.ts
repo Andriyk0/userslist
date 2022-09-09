@@ -31,4 +31,6 @@ interface State {
   users: User[],
   userPosts: Post[],
   selectUser: User | undefined,
+  sortValue: string,
+  searchValue: string,
 }
