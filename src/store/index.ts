@@ -7,6 +7,7 @@ enum ActionType {
   SET_SELECT_USER = 'SET_SELECT_USER',
   SET_SORT_VALUE = 'SET_SORT_VALUE',
   SET_SEARCH_VALUE = 'SET_SEARCH_VALUE',
+  SET_START = 'SET_START',
 }
 
 const initialState:State = {
@@ -15,6 +16,7 @@ const initialState:State = {
   selectUser: undefined,
   sortValue: 'All',
   searchValue: '',
+  start: 0,
 };
 
 export const setUsers = createAction<User[]>(ActionType.SET_USERS);
@@ -22,6 +24,7 @@ export const setUserPosts = createAction<Post[]>(ActionType.SET_USER_POSTS);
 export const setSelectUser = createAction<User>(ActionType.SET_SELECT_USER);
 export const setSortValue = createAction<string>(ActionType.SET_SORT_VALUE);
 export const setSearchValue = createAction<string>(ActionType.SET_SEARCH_VALUE);
+export const setStart = createAction<number>(ActionType.SET_START);
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(setUsers, (state, action) => {
@@ -47,6 +50,11 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(setSearchValue, (state, action) => {
     // eslint-disable-next-line no-param-reassign
     state.searchValue = action.payload;
+  });
+
+  builder.addCase(setStart, (state, action) => {
+    // eslint-disable-next-line no-param-reassign
+    state.start = action.payload;
   });
 });
 

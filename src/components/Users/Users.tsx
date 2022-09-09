@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import classnames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../api/api';
 import { setSelectUser, setUsers } from '../../store';
-import { getSearchValue, getSortValue, getUsersFromStore } from '../../store/selectors';
+import {
+  getSearchValue, getSelectedUser, getSortValue, getStart, getUsersFromStore,
+} from '../../store/selectors';
 import './Users.scss';
 
 export const Users:React.FC = () => {
@@ -10,6 +13,8 @@ export const Users:React.FC = () => {
   const sortValue = useSelector(getSortValue);
   const searchValue = useSelector(getSearchValue);
   const users = useSelector(getUsersFromStore(sortValue, searchValue));
+  const selectUser = useSelector(getSelectedUser);
+  const start = useSelector(getStart);
 
   const loadUsersFromServer = async () => {
     try {
@@ -27,17 +32,17 @@ export const Users:React.FC = () => {
   }, [searchValue, sortValue]);
 
   return (
-    <div className="user">
+    <div className={classnames('user', { user1: selectUser })}>
       {
-        [...users].splice(0, 4).map((user:User) => (
-          <div key={user.id} className="user__card">
-            <p className="user__info">{user.name}</p>
-            <p className="user__info">{user.email}</p>
-            <p className="user__info">{user.phone}</p>
-            <p className="user__info">{user.website}</p>
+        [...users].splice(start, 4).map((user:User) => (
+          <div key={user.id} className={classnames('user__card', { user__card1: selectUser })}>
+            <p className={classnames('user__info', { user__info1: selectUser })}>{user.name}</p>
+            <p className={classnames('user__info', { user__info1: selectUser })}>{user.email}</p>
+            <p className={classnames('user__info', { user__info1: selectUser })}>{user.phone}</p>
+            <p className={classnames('user__info', { user__info1: selectUser })}>{user.website}</p>
             <button
               type="button"
-              className="user__button"
+              className={classnames('user__button', { user__button1: selectUser })}
               onClick={() => dispatch(setSelectUser(user))}
             >
               Show user posts
